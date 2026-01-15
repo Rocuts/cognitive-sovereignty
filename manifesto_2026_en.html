@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cognitive Sovereignty 2026 — Manifesto and Technical Whitepaper | AEGIS TNST</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js"></script>
+    <!-- High Caliber Typography -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+          fontFamily: 'Inter',
+          primaryColor: '#ffffff',
+          lineColor: '#000000',
+          primaryTextColor: '#000000',
+          mainBkg: '#ffffff',
+          nodeBorder: '#000000',
+          clusterBkg: '#f3f4f6',
+          clusterBorder: '#9ca3af',
+        },
+      })
+
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['Cinzel', 'serif'],
+              serif: ['Cormorant Garamond', 'serif'],
+              sans: ['Inter', 'sans-serif'],
+              mono: ['Space Mono', 'monospace'],
+            },
+            colors: {
+              paper: '#fcfbf9', // Off-white for prolonged reading
+              ink: '#111827', // Almost black, less aggressive
+              accent: '#b91c1c', // Sealing wax red for editorial emphasis
+            },
+            spacing: {
+              128: '32rem',
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #e2e8f0;
+        color: #111827;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Physical paper effect */
+      .page-container {
+        background: #fcfbf9;
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06),
+          0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        margin: 40px auto;
+        width: 210mm; /* Exact A4 */
+        min-height: 297mm;
+        padding: 20mm 25mm; /* Standard academic margins */
+        position: relative;
+        overflow: hidden;
+        page-break-after: always; /* Force page break when printing */
+      }
+
+      /* Subtle background noise for texture */
+      .page-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .content-layer {
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Editorial Typography */
+      h1 {
+        line-height: 0.9;
+        letter-spacing: -0.02em;
+      }
+      p {
+        font-size: 1.125rem;
+        line-height: 1.6;
+        color: #374151;
+      }
+
+      .dropcap::first-letter {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 4.8rem;
+        float: left;
+        line-height: 0.85;
+        margin-right: 0.75rem;
+        margin-top: 0.1rem;
+        color: #111827;
+      }
+
+      /* Manifesto Elements */
+      .thesis-number {
+        font-family: 'Space Mono', monospace;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(180deg);
+      }
+
+      .sidenote {
+        float: right;
+        clear: right;
+        width: 35%;
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        line-height: 1.4;
+        color: #4b5563;
+        border-top: 2px solid #111827;
+        padding-top: 0.5rem;
+      }
+
+      .footnote {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.65rem;
+        color: #6b7280;
+        border-top: 1px solid #e5e7eb;
+        margin-top: auto;
+        padding-top: 1rem;
+      }
+
+      /* Book Divider */
+      .book-divider {
+        background-color: #111827;
+        color: #fcfbf9;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      @media print {
+        body {
+          background: none;
+        }
+        .page-container {
+          margin: 0;
+          box-shadow: none;
+          width: 100%;
+          height: auto;
+          min-height: 297mm; /* Ensure full height */
+        }
+        .no-print {
+          display: none;
+        }
+        button {
+          display: none;
+        }
+        .break-before {
+            page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Action Button -->
+    <div class="fixed bottom-8 right-8 no-print z-50 flex flex-col gap-2">
+      <button
+        onclick="window.print()"
+        class="group relative inline-flex h-12 items-center justify-center overflow-hidden bg-neutral-950 px-6 font-mono font-medium text-neutral-50 transition-all duration-300 hover:bg-neutral-800 hover:w-56 w-12 rounded-full"
+      >
+        <div
+          class="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]"
+        >
+          <div class="relative h-full w-8 bg-white/20"></div>
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="transition-all"
+        >
+          <path d="M6 9V2h12v7" />
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+          <path d="M6 14h12v8H6z" />
+        </svg>
+        <span class="ml-2 hidden group-hover:inline whitespace-nowrap">PRINT DOCUMENT</span>
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BOOK I: THE MANIFESTO -->
+    <!-- ========================================== -->
+
+    <!-- PAGE 0: BOOK I COVER (NEW) -->
+    <div class="page-container book-divider">
+        <div class="border-2 border-white p-12">
+            <h1 class="font-display text-6xl tracking-widest mb-4">BOOK I</h1>
+            <div class="w-16 h-1 bg-white mx-auto mb-4"></div>
+            <h2 class="font-mono text-xl tracking-[0.3em] uppercase">The Manifesto</h2>
+            <p class="font-serif italic text-gray-400 mt-6">Vision, Principles, and Philosophy</p>
+        </div>
+    </div>
+
+    <!-- PAGE 1: PREAMBLE AND THESES (MANIFESTO COVER) -->
+    <div class="page-container">
+      <div class="content-layer h-full flex flex-col justify-between">
+        <!-- Header -->
+        <header class="border-b-4 border-black pb-6 mb-10">
+          <div class="flex justify-between items-end mb-4">
+            <div class="flex flex-col">
+              <!-- NOVA Logo -->
+              <a href="https://www.aegistnst.pw" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 mb-6 mix-blend-multiply group">
+                <img
+                  src="./assets/images/Icono.png"
+                  alt="Nova Logo"
+                  class="w-12 h-12 object-contain group-hover:opacity-80 transition-opacity"
+                />
+                <div class="flex flex-col justify-center h-12">
+                  <span
+                    class="font-display font-black text-4xl leading-none tracking-[0.15em] text-ink group-hover:text-gray-700 transition-colors"
+                    >NOVA</span
+                  >
+                </div>
+              </a>
+
+              <span class="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-gray-500 mb-1"
+                >Strategic Document &mdash; <a href="index.html" class="underline hover:text-black">LEER EN ESPAÑOL</a></span>
+            </div>
+            <div class="text-right">
+              <span class="font-sans text-xs font-bold text-gray-400 block uppercase">AEGIS TNST</span>
+            </div>
+          </div>
+
+          <h1 class="font-display text-5xl md:text-7xl font-bold uppercase text-ink mt-8 mb-4">
+            The Future is<br />Offline
+          </h1>
+          <p class="font-serif text-xl italic text-gray-800 mb-2">"Offline by design. Connected by choice."</p>
+          <h2 class="font-serif text-2xl md:text-3xl italic text-gray-600 leading-tight max-w-2xl">
+            A strategic vision on cognitive sovereignty in the era of ubiquitous AI.
+          </h2>
+        </header>
+
+        <!-- Main Body -->
+        <main class="flex-grow">
+          <div class="grid grid-cols-12 gap-8">
+            <!-- Left Column (Main Text) -->
+            <div class="col-span-8">
+              <p class="dropcap font-serif text-lg leading-relaxed text-justify mb-6">
+                The history of recent educational technology has been a history of growing dependence. 
+                Under the promise of "modernization," many institutions have migrated their most valuable asset
+                 —the cognitive process— to external infrastructures. We have gone from owning the means 
+                 of knowledge to renting access to it.
+              </p>
+              <p class="font-serif text-lg leading-relaxed text-justify mb-6">
+                In 2026, this distinction is critical. With Artificial Intelligence becoming essential 
+                infrastructure, relying exclusively on the cloud introduces strategic vulnerabilities. 
+                <strong
+                  >Institutional autonomy requires control over the inference infrastructure.</strong
+                >
+              </p>
+
+              <div class="border-l-4 border-accent pl-6 py-2 my-8">
+                <p class="font-display font-bold text-xl uppercase leading-tight">
+                  "True innovation is not just connecting the classroom but empowering it to function 
+                  with or without the rest of the world."
+                </p>
+              </div>
+
+              <p class="font-serif text-lg leading-relaxed text-justify">
+                AEGIS TNST proposes an alternative: <strong>Patrimonial Infrastructure</strong> —institutional assets that remain under control and capitalize over the long term. 
+                Local hardware systems, open models, and privacy by default. It is not about 
+                rejecting the cloud, but about not depending existentially on it.
+              </p>
+            </div>
+
+            <!-- Right Column (Summarized Theses) -->
+            <div class="col-span-4 border-l border-gray-200 pl-6 flex flex-col gap-8">
+              <div>
+                <span
+                  class="font-mono text-xs font-bold text-accent uppercase tracking-widest block mb-2"
+                  >Principle I</span
+                >
+                <h3 class="font-sans font-bold text-lg leading-tight mb-2">Asset vs. Expense</h3>
+                <p class="font-serif text-sm text-gray-600 leading-snug">
+                  SaaS is a perpetual operating expense. Proprietary hardware and models are institutional capital accumulation.
+                </p>
+              </div>
+              <div>
+                <span
+                  class="font-mono text-xs font-bold text-accent uppercase tracking-widest block mb-2"
+                  >Principle II</span
+                >
+                <h3 class="font-sans font-bold text-lg leading-tight mb-2">Deterministic Latency</h3>
+                <p class="font-serif text-sm text-gray-600 leading-snug">
+                  Pedagogical fluency requires immediacy. Local execution eliminates network variability, ensuring predictable latency responses.
+                </p>
+              </div>
+              <div>
+                <span
+                  class="font-mono text-xs font-bold text-accent uppercase tracking-widest block mb-2"
+                  >Principle III</span
+                >
+                <h3 class="font-sans font-bold text-lg leading-tight mb-2">
+                  Privacy by Default
+                </h3>
+                <p class="font-serif text-sm text-gray-600 leading-snug">
+                  One of the most robust security layers is physical: sensitive data does not need to leave the campus to be processed.
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footnote flex justify-between mt-8">
+          <div>DOC_REF: NOVA-2026-MAN-01</div>
+          <div>MANIFESTO</div>
+          <div>PAGE 01 / 06</div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- PAGE 2: THE PROBLEM (Strategic Analysis) -->
+    <div class="page-container break-before">
+      <div class="content-layer h-full flex flex-col">
+        <h3 class="font-display font-bold text-4xl mb-2 uppercase tracking-tight">
+          I. The Cloud Paradox
+        </h3>
+        <h4
+          class="font-mono text-sm text-gray-500 mb-10 uppercase tracking-widest border-b border-black pb-2"
+        >
+          Digital Dependency Analysis
+        </h4>
+
+        <div class="grid grid-cols-2 gap-12 mb-10">
+            <div class="font-serif text-lg text-justify">
+              <p class="mb-4">
+                The uncritical adoption of "Cloud-First" models has created an unaccounted negative externality:
+                the loss of control over data generated in the learning process.
+              </p>
+              <p>
+                When cognitive processing occurs exclusively on external servers, the institution 
+                loses the ability to audit <em>how</em> responses are generated and <em>where</em> data resides. 
+                Sovereignty is traded for short-term convenience, creating long-term technical and strategic 
+                debt.
+              </p>
+            </div>
+            <div class="bg-gray-100 p-8 border border-gray-300 relative">
+              <span
+                class="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-2 font-mono text-xs font-bold border border-gray-300 text-gray-500 uppercase"
+                >Value Analysis</span
+              >
+  
+              <div class="space-y-6 mt-2">
+                <div>
+                  <p class="font-sans text-xs font-bold uppercase text-red-800 mb-1">
+                    Centralized Model (Cloud)
+                  </p>
+                  <p class="font-serif italic text-lg leading-tight">
+                    Perpetual OPEX + Data Extraction = <br /><span
+                      class="font-bold not-italic text-black"
+                      >Vendor Lock-in</span
+                    >
+                  </p>
+                </div>
+                <div class="w-full h-px bg-gray-300"></div>
+                <div>
+                  <p class="font-sans text-xs font-bold uppercase text-green-800 mb-1">
+                    Nova Model (Local)
+                  </p>
+                  <p class="font-serif italic text-lg leading-tight">
+                    Initial CAPEX + Data Retention = <br /><span
+                      class="font-bold not-italic text-black"
+                      >Institutional Asset</span
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- Stylized Mermaid Graph -->
+        <div class="my-8 border-y-2 border-black py-8">
+          <div class="mermaid text-center">
+            flowchart LR
+                subgraph CLOUD ["CENTRALIZED MODEL"]
+                    direction TB
+                    S1[School] -->|Data + Subscription| C1((External Cloud))
+                    C1 -->|AI Service| S1
+                    C1 -.->|Inference + Training| P1[Vendor IP]
+                end
+
+                subgraph NOVA ["DECENTRALIZED MODEL"]
+                    direction TB
+                    S2[School] -->|Private Data| L1((Local Nova Node))
+                    L1 -->|Dedicated AI| S2
+                    L1 -.->|Local Inference| P2[School IP]
+                end
+
+                style CLOUD fill:#f9fafb,stroke:#9ca3af,stroke-dasharray: 5 5
+                style NOVA fill:#ffffff,stroke:#000000,stroke-width:2px
+                style C1 fill:#fee2e2,stroke:#991b1b
+                style L1 fill:#dcfce7,stroke:#166534
+
+          </div>
+          <p
+            class="text-center font-mono text-[0.6rem] mt-4 text-gray-500 uppercase tracking-widest"
+          >
+            Figure 1.1: Data Flow and Intellectual Property Comparison.
+          </p>
+        </div>
+
+        <div class="sidenote">
+          <strong>Operational Autonomy</strong><br />
+          The ability to operate without an internet connection is not a regression, but a guarantee of continuity 
+          and resilience against global infrastructure failures.
+        </div>
+
+        <p class="font-serif text-lg text-justify mt-4">
+          Nova's proposal is to restore balance. By moving inference to the Edge, 
+          the institution regains custody of information and the ability to operate on its 
+          own terms, timelines, and ethical standards.
+        </p>
+
+        <footer class="footnote flex justify-between mt-auto">
+          <div>AEGIS TNST</div>
+          <div>MANIFESTO</div>
+          <div>PAGE 02 / 06</div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- SECTION SEPARATOR -->
+    <div class="page-container book-divider">
+        <div class="border-2 border-white p-12">
+            <h1 class="font-display text-6xl tracking-widest mb-4">BOOK II</h1>
+            <div class="w-16 h-1 bg-white mx-auto mb-4"></div>
+            <h2 class="font-mono text-xl tracking-[0.3em] uppercase">Technical Whitepaper</h2>
+            <p class="font-serif italic text-gray-400 mt-6">Specifications, Definitions, and Risk Analysis</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BOOK II: TECHNICAL WHITEPAPER -->
+    <!-- ========================================== -->
+
+    <!-- PAGE 3: DEFINITIONS AND THEORY -->
+    <div class="page-container break-before">
+        <div class="content-layer h-full flex flex-col">
+          <header class="flex justify-between items-center border-b border-gray-300 pb-4 mb-8">
+            <h3 class="font-mono text-sm font-bold uppercase tracking-widest text-gray-500">
+                Nova Whitepaper 2026
+            </h3>
+            <div class="text-right">
+                <span class="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-gray-500 block">Technical Document</span>
+                <span class="font-bold font-display">TECHNICAL SECTION</span>
+            </div>
+          </header>
+
+          <h3 class="font-display font-bold text-4xl mb-6 uppercase tracking-tight">
+            1. Cognitive Sovereignty
+          </h3>
+
+          <div class="bg-gray-50 border-l-4 border-black p-6 mb-8">
+            <h4 class="font-bold font-sans text-sm uppercase mb-2">Formal Definition</h4>
+            <p class="font-serif text-lg text-justify leading-relaxed">
+                <strong>Cognitive Sovereignty</strong> is defined as the capability of an institution to own, 
+                audit, and operate the artificial intelligence systems that interact with its community, 
+                without blocking dependencies on third parties.
+            </p>
+          </div>
+
+          <p class="font-serif text-lg mb-4">For a system to be considered "Sovereign," it must meet <strong>four verifiable criteria</strong>:</p>
+
+          <div class="grid grid-cols-2 gap-6 mb-8">
+            <div class="border border-gray-200 p-4">
+                <span class="font-mono text-xs font-bold text-accent">CRITERION 01</span>
+                <h5 class="font-bold text-lg mb-1">Local Inference</h5>
+                <p class="font-serif text-sm text-gray-600">Data processing occurs entirely within the institution's physical or private infrastructure.</p>
+            </div>
+            <div class="border border-gray-200 p-4">
+                <span class="font-mono text-xs font-bold text-accent">CRITERION 02</span>
+                <h5 class="font-bold text-lg mb-1">Model Ownership</h5>
+                <p class="font-serif text-sm text-gray-600">The institution has access to model weights and a license to execute it without continuous remote validation.</p>
+            </div>
+            <div class="border border-gray-200 p-4">
+                <span class="font-mono text-xs font-bold text-accent">CRITERION 03</span>
+                <h5 class="font-bold text-lg mb-1">Auditability</h5>
+                <p class="font-serif text-sm text-gray-600">Technical ability to inspect system prompts, knowledge bases (RAG), and interaction logs.</p>
+            </div>
+            <div class="border border-gray-200 p-4">
+                <span class="font-mono text-xs font-bold text-accent">CRITERION 04</span>
+                <h5 class="font-bold text-lg mb-1">Resilience (Air-Gap)</h5>
+                <p class="font-serif text-sm text-gray-600">Operational capability for critical pedagogical functionality in total absence of internet connectivity.</p>
+            </div>
+          </div>
+
+          <h3 class="font-display font-bold text-3xl mb-4 mt-8 uppercase tracking-tight">
+            2. Hardware Architecture
+          </h3>
+          <p class="font-serif text-lg text-justify mb-6">
+            Nova implements a distributed architecture based on Edge Nodes, utilizing 
+            high-efficiency ARM architecture processors, where Apple Silicon serves as a performance-per-watt reference without excluding equivalent architectures.
+          </p>
+
+          <div class="grid grid-cols-3 gap-4 text-center font-mono text-xs">
+            <div class="bg-black text-white p-3 rounded-sm">
+                <div class="block text-2xl font-bold mb-1">NPU</div>
+                NEURAL ENGINE
+            </div>
+            <div class="bg-gray-200 text-gray-800 p-3 rounded-sm">
+                <div class="block text-2xl font-bold mb-1">16GB+</div>
+                UNIFIED MEMORY
+            </div>
+            <div class="bg-gray-200 text-gray-800 p-3 rounded-sm">
+                <div class="block text-2xl font-bold mb-1">SSD</div>
+                NVMe STORAGE
+            </div>
+          </div>
+
+          <footer class="footnote flex justify-between mt-auto">
+            <div>AEGIS TNST</div>
+            <div>TECHNICAL WHITEPAPER</div>
+            <div>PAGE 03 / 06</div>
+          </footer>
+        </div>
+    </div>
+
+    <!-- PAGE 4: RISKS AND TRADE-OFFS (NEW SECTION) -->
+    <div class="page-container break-before">
+        <div class="content-layer h-full flex flex-col">
+            <header class="flex justify-between items-center border-b border-gray-300 pb-4 mb-8">
+                <h3 class="font-mono text-sm font-bold uppercase tracking-widest text-gray-500">
+                    Feasibility Analysis
+                </h3>
+            </header>
+
+            <h3 class="font-display font-bold text-3xl mb-6 uppercase tracking-tight">
+                3. Limitations and Trade-offs
+            </h3>
+            
+            <p class="font-serif text-lg mb-8 text-justify">
+                Adopting a sovereign infrastructure implies responsibilities that do not exist in the SaaS model. 
+                It is fundamental to acknowledge these commitments for informed decision-making.
+            </p>
+
+            <div class="space-y-6">
+                <!-- Trade-off 1 -->
+                <div class="flex gap-6">
+                    <div class="w-12 h-12 flex-shrink-0 bg-gray-200 flex items-center justify-center font-bold font-mono text-xl">A</div>
+                    <div>
+                        <h5 class="font-bold text-lg mb-1">Initial Investment (CAPEX) vs. Operating (OPEX)</h5>
+                        <p class="font-serif text-sm text-gray-600 text-justify">
+                            The Nova model requires hardware acquisition (compact edge devices / local servers). This represents 
+                            a higher financial entry barrier than a monthly subscription. However, the projected TCO (Total Cost of Ownership) 
+                            over 3 years tends to be lower than recurring Enterprise licenses per user.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Trade-off 2 -->
+                <div class="flex gap-6">
+                    <div class="w-12 h-12 flex-shrink-0 bg-gray-200 flex items-center justify-center font-bold font-mono text-xl">B</div>
+                    <div>
+                        <h5 class="font-bold text-lg mb-1">Obsolescence Management</h5>
+                        <p class="font-serif text-sm text-gray-600 text-justify">
+                            Physical hardware depreciates. Nova mitigates this by selecting high-efficiency ARM architectures 
+                            with extended lifecycles (5+ years), but the institution must plan for hardware renewal cycles.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Trade-off 3 -->
+                <div class="flex gap-6">
+                    <div class="w-12 h-12 flex-shrink-0 bg-gray-200 flex items-center justify-center font-bold font-mono text-xl">C</div>
+                    <div>
+                        <h5 class="font-bold text-lg mb-1">Context Window and Capacity</h5>
+                        <p class="font-serif text-sm text-gray-600 text-justify">
+                            Local models (Reasoning SLMs) have inferior context windows and generalization capabilities compared 
+                            to massive frontier models (such as GPT-5, Gemini 3 Ultra, or Claude 4 Opus). Nova compensates for this through 
+                            Specialized Agents and RAG, but they are not designed for massive encyclopedic general knowledge tasks 
+                            outside the school curriculum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-neutral-100 p-6 border-t-2 border-neutral-300">
+                <h4 class="font-mono text-xs font-bold uppercase tracking-widest mb-3">Feasibility Conclusion</h4>
+                <p class="font-serif italic text-sm text-gray-700">
+                    "Cognitive sovereignty is preferable for institutions that prioritize privacy, long-term security, 
+                    and curricular control. For generic and casual use cases, cloud solutions may remain complementary."
+                </p>
+            </div>
+
+            <footer class="footnote flex justify-between mt-auto">
+                <div>AEGIS TNST</div>
+                <div>TECHNICAL WHITEPAPER</div>
+                <div>PAGE 04 / 06</div>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- PAGE 5: REGULATIONS AND FINAL -->
+    <div class="page-container break-before">
+        <div class="content-layer h-full flex flex-col">
+            <h3 class="font-display font-bold text-3xl mb-8 uppercase tracking-tight">
+            4. Regulatory Framework
+            </h3>
+
+            <div class="grid grid-cols-1 gap-8">
+            <!-- Regulatory Section -->
+            <div>
+                <h4
+                class="font-mono text-xs font-bold uppercase tracking-widest border-b border-black pb-2 mb-4"
+                >
+                Compliance and Standards
+                </h4>
+                <ul class="font-serif text-sm space-y-4">
+                <li class="pl-4 border-l-2 border-gray-300">
+                    <strong>GDPR (EU Regulation 2016/679) - Data Minimization</strong><br/>
+                    By not transferring personal data outside the local environment, the Nova architecture significantly reduces compliance scope and the risk of international fines.
+                </li>
+                <li class="pl-4 border-l-2 border-gray-300">
+                    <strong>Child Protection (COPPA / Local Laws)</strong><br/>
+                    The "Air-Gapped" design structurally reduces the possibility of minors' data being collected for commercial profiling, facilitating compliance with the strictest standards.
+                </li>
+                </ul>
+            </div>
+            
+            <div class="mt-8 border-t border-gray-200 pt-8">
+                <h4 class="font-display font-bold text-2xl mb-4">Reference Architecture (Illustrative, Non-Binding)</h4>
+                <p class="font-serif text-sm text-gray-600 mb-4 text-justify">
+                    The following table describes a <strong>technical reference implementation</strong> to illustrate how a local cognitive sovereignty architecture can be materialized.
+                    It does not constitute a contractual specification, delivery commitment, or technological limitation.
+                </p>
+                <table class="w-full text-sm font-serif text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-300">
+                            <th class="py-2 font-sans font-bold text-gray-500 uppercase text-xs w-1/4">Component</th>
+                            <th class="py-2 font-sans font-bold text-gray-500 uppercase text-xs w-3/4">Illustrative Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-3 font-bold align-top">Inference Engine</td>
+                            <td class="py-3 align-top"><strong>Local</strong> inference engines compatible with open models, optimized for edge hardware execution.</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-3 font-bold align-top">Compatible Models</td>
+                            <td class="py-3 align-top">Medium-sized open models (<strong>SLMs</strong>) tuned for pedagogical tasks and offline operation (selection may vary by institution and use case).</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-3 font-bold align-top">User Interface</td>
+                            <td class="py-3 align-top"><strong>Local</strong> interface accessible from the institutional network (browser/thin client), without continuous dependence on external services.</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 font-bold align-top">Implementation Form</td>
+                            <td class="py-3 align-top"><strong>Encapsulated</strong> deployment in a local environment (isolated software or dedicated device), defined case by case according to institutional and regulatory requirements.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="font-serif text-xs text-gray-400 mt-4 italic">
+                    This architecture is presented exclusively for illustrative purposes and may vary according to institutional, regulatory, or technological requirements.
+                </p>
+            </div>
+
+            </div>
+
+            <div class="text-center mt-12 mb-8">
+            <div class="inline-block mb-4">
+               <img src="./assets/images/Icono.png" alt="Nova Logo" class="w-16 h-16 object-contain grayscale opacity-50" />
+            </div>
+            <p class="font-serif text-gray-500 text-sm">
+                Document generated by AEGIS TNST<br/>
+                Bogotá, D.C. — Fiscal Year 2026
+            </p>
+            </div>
+
+            <footer class="footnote flex justify-between mt-auto">
+            <div>AEGIS TNST</div>
+            <div>TECHNICAL WHITEPAPER</div>
+            <div>PAGE 05 / 06</div>
+            </footer>
+        </div>
+    </div>
+
+
+    <!-- PAGE 6: LEGAL DISCLAIMER AND CONTACT (NEW) -->
+    <div class="page-container break-before">
+        <div class="content-layer h-full flex flex-col justify-center items-center text-center">
+            
+            <div class="max-w-2xl border-t-4 border-black pt-12">
+                <h3 class="font-display font-bold text-2xl uppercase mb-6 tracking-widest">Legal Notice</h3>
+                <div class="font-serif text-sm text-gray-500 space-y-4 text-justify">
+                    <p>
+                        <strong>Nature of the Document:</strong> This document ("Whitepaper: Cognitive Sovereignty 2026") is provided solely for informational and strategic purposes. Its content reflects the technological and philosophical vision of AEGIS TNST S.A.S. as of its publication date.
+                    </p>
+                    <p>
+                        <strong>No Legal Advice:</strong> Nothing in this document constitutes, or should be interpreted as, legal, contractual, or financial advice. Institutions should consult their own legal departments to assess their specific obligations under GDPR, COPPA, or other local regulatory frameworks.
+                    </p>
+                    <p>
+                        <strong>Forward-Looking Statements:</strong> Descriptions of future capabilities, hardware integration (including references to ARM/Apple Silicon architectures), and product roadmaps are subject to technical changes without prior notice, depending on the evolution of the state of the art in Artificial Intelligence.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-24">
+                <h4 class="font-mono text-xs font-bold uppercase tracking-[0.3em] mb-8 text-accent">Institutional Contact</h4>
+                
+                <div class="font-serif text-lg leading-relaxed text-gray-800">
+                    <p>AEGIS TNST S.A.S.</p>
+                    <p>Education & Technological Sovereignty Division</p>
+                    <p class="mt-4"><a href="mailto:contacto@aegistnst.com" class="hover:text-accent transition-colors underline decoration-1 underline-offset-4">contacto@aegistnst.com</a></p>
+                    <p><a href="https://www.aegistnst.pw" target="_blank" class="hover:text-accent transition-colors underline decoration-1 underline-offset-4">www.aegistnst.pw</a></p>
+                </div>
+                
+                <p class="font-mono text-[0.65rem] text-gray-400 mt-12 uppercase tracking-widest">
+                    BOGOTÁ, COLOMBIA • EST. 2026
+                </p>
+            </div>
+
+            <footer class="footnote w-full flex flex-col items-center mt-auto gap-4">
+                <div class="flex justify-between w-full">
+                    <div>AEGIS TNST</div>
+                    <div>TECHNICAL WHITEPAPER</div>
+                    <div>PAGE 06 / 06</div>
+                </div>
+                <div class="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-gray-400">
+                    &mdash; END OF DOCUMENT &mdash;
+                </div>
+            </footer>
+        </div>
+    </div>
+  </body>
+</html>
