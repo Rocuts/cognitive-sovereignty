@@ -6,8 +6,8 @@ Repositorio oficial para la publicación del Manifiesto y Whitepaper Técnico de
 
 El documento está disponible en línea a través de GitHub Pages:
 
-- **Español (Principal):** [Ver Manifiesto](https://johanrocuts.github.io/cognitive-sovereignty/)
-- **English:** [Read Manifesto](https://johanrocuts.github.io/cognitive-sovereignty/manifesto_2026_en.html)
+- **Español (Principal):** [Ver Manifiesto](https://rocuts.github.io/cognitive-sovereignty/)
+- **English:** [Read Manifesto](https://rocuts.github.io/cognitive-sovereignty/manifesto_2026_en.html)
 
 ## Estructura del Proyecto
 
